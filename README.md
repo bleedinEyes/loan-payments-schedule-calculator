@@ -54,3 +54,7 @@ C:\\NSPK_Entry_Tasks\\LoanPaymentSchedule.xlsx
 - org.apache.poi: для работы с файлами Excel
 - Jackson: для работы с json файлами
 - Lombok: для упрощения кода с геттерами и сеттерами
+
+### TODO:
+- Реализовать валидацию параметров из json файла
+- Покрыть функционал тестами
