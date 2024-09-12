@@ -2,6 +2,6 @@
   "loanAmount": 10000,
   "loanTermMonths": 12,
   "annualInterestRate": 14.0,
-  "loanStartDate": "2023-09-09",
+  "loanStartDate": "2023-09-12",
   "paymentType": "ANNUITY"
 }

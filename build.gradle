@@ -1,5 +1,6 @@
 plugins {
     id 'java'
+    id 'com.github.johnrengelman.shadow' version '7.1.2'
 }
 
 jar {
@@ -30,6 +31,12 @@ dependencies {
 
     testCompileOnly 'org.projectlombok:lombok:1.18.24'
     testAnnotationProcessor 'org.projectlombok:lombok:1.18.24'
+}
+
+shadowJar {
+    archiveBaseName.set('your-fat-jar')
+    archiveClassifier.set('')
+    archiveVersion.set('1.0')
 }
 
 test {
