@@ -1,35 +1,17 @@
-package ru.lilaksy.impl;
+package ru.lilaksy.impl.helpers;
 
-import com.fasterxml.jackson.databind.json.JsonMapper;
 import ru.lilaksy.domain.LoanDetails;
 
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.math.BigDecimal;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 
-public class LoanDetailsLoader {
+public class LoanDetailsValidator {
 
-    public LoanDetails load(String filePath) throws Exception {
-        JsonMapper objectMapper = JsonMapper.builder().findAndAddModules().build();
-        try (InputStream inputStream = new FileInputStream(filePath)) {
-            LoanDetails loanDetails = objectMapper.readValue(inputStream, LoanDetails.class);
-            validateLoanDetails(loanDetails);
-            return loanDetails;
-        } catch (IOException e) {
-            System.err.println("Ошибка при загрузке файла: " + e.getMessage());
-            throw e;
-        }
-    }
+    HolidayChecker holidayChecker = new HolidayChecker();
 
-    //======================================================================================================================================================
-    //Implementation
-    //======================================================================================================================================================
-
-    private void validateLoanDetails(LoanDetails loanDetails) throws IllegalArgumentException {
+    public void validateLoanDetails(LoanDetails loanDetails) throws IllegalArgumentException {
         if (loanDetails.getLoanAmount() == null || loanDetails.getLoanAmount().compareTo(BigDecimal.ZERO) <= 0) {
             throw new IllegalArgumentException("loanAmount должен быть больше 0.");
         }
@@ -47,7 +29,10 @@ public class LoanDetailsLoader {
         try {
             LocalDate loanStartDate = loanDetails.getLoanStartDate();
             DayOfWeek dayOfWeek = loanStartDate.getDayOfWeek();
-            if (dayOfWeek == DayOfWeek.SATURDAY || dayOfWeek == DayOfWeek.SUNDAY) {
+            if (loanStartDate.isAfter(LocalDate.now())) {
+                throw new IllegalArgumentException("loanStartDate не может быть позже текущей даты.");
+            }
+            if (dayOfWeek == DayOfWeek.SATURDAY || dayOfWeek == DayOfWeek.SUNDAY || holidayChecker.isHoliday(loanStartDate)) {
                 throw new IllegalArgumentException("loanStartDate не должен выпадать на выходной день.");
             }
         } catch (DateTimeParseException e) {

@@ -4,7 +4,7 @@ import ru.lilaksy.domain.LoanDetails;
 import ru.lilaksy.domain.PaymentSchedule;
 import ru.lilaksy.impl.PaymentScheduleCalculator;
 import ru.lilaksy.impl.ExcelFileExporter;
-import ru.lilaksy.impl.LoanDetailsLoader;
+import ru.lilaksy.impl.LoanDetailsLoaderJson;
 import ru.lilaksy.impl.interfaces.FileExporter;
 
 import java.util.List;
@@ -18,7 +18,7 @@ public class Main {
             System.exit(1);
         }
 
-        LoanDetailsLoader loader = new LoanDetailsLoader();
+        LoanDetailsLoaderJson loader = new LoanDetailsLoaderJson();
         PaymentScheduleCalculator calculator = new PaymentScheduleCalculator();
         FileExporter exporter = new ExcelFileExporter();
 

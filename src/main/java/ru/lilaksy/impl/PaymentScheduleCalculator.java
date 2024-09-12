@@ -3,6 +3,7 @@ package ru.lilaksy.impl;
 import ru.lilaksy.domain.LoanDetails;
 import ru.lilaksy.domain.PaymentSchedule;
 import ru.lilaksy.domain.PaymentType;
+import ru.lilaksy.impl.helpers.HolidayChecker;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -13,15 +14,8 @@ import java.util.*;
 
 public class PaymentScheduleCalculator {
 
-    private final static Map<Month, Set<Integer>> HOLIDAYS = new HashMap<>() {{
-        put(Month.JANUARY, Set.of(1, 2, 3, 4, 5, 6, 7, 8));
-        put(Month.FEBRUARY, Set.of(23));
-        put(Month.MARCH, Set.of(8));
-        put(Month.MAY, Set.of(1, 9));
-        put(Month.JUNE, Set.of(12));
-        put(Month.NOVEMBER, Set.of(4));
+    HolidayChecker holidayChecker = new HolidayChecker();
 
-    }};
     public List<PaymentSchedule> calculate(LoanDetails loanDetails) {
         List<PaymentSchedule> schedule = new ArrayList<>();
 
@@ -89,15 +83,10 @@ public class PaymentScheduleCalculator {
 
     private LocalDate adjustPaymentDate(LocalDate paymentDate) {
 
-        while (paymentDate.getDayOfWeek() == DayOfWeek.SATURDAY || paymentDate.getDayOfWeek() == DayOfWeek.SUNDAY || isHoliday(paymentDate)) {
+        while (paymentDate.getDayOfWeek() == DayOfWeek.SATURDAY || paymentDate.getDayOfWeek() == DayOfWeek.SUNDAY || holidayChecker.isHoliday(paymentDate)) {
             paymentDate = paymentDate.plusDays(1);
         }
 
         return paymentDate;
-    }
-
-    private boolean isHoliday(LocalDate paymentDate) {
-        return HOLIDAYS.getOrDefault(paymentDate.getMonth(), Collections.emptySet())
-                .contains(paymentDate.getDayOfMonth());
     }
 }
