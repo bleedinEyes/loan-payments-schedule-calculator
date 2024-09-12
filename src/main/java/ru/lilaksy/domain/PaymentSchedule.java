@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @AllArgsConstructor
@@ -11,7 +12,7 @@ import java.time.LocalDate;
 @Setter
 public class PaymentSchedule {
     private LocalDate paymentDate;
-    private double paymentAmount;
-    private double principalPayment;
-    private double interestPayment;
+    private BigDecimal paymentAmount;
+    private BigDecimal principalPayment;
+    private BigDecimal interestPayment;
 }
