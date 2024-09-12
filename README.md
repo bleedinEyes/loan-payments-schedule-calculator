@@ -60,6 +60,4 @@ C:\path\to\output\file\LoanPaymentSchedule.xlsx
 - org.apache.poi: для работы с файлами Excel
 - Jackson: для работы с json файлами
 - Lombok: для упрощения кода с геттерами и сеттерами
-
-### TODO:
-- Покрыть функционал тестами
+- JUnit, AssertJ и Mockito: для написания тестов
