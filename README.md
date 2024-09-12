@@ -11,7 +11,7 @@
 - **Срок кредита (в месяцах) (“loanTermMonths”)**
 - **Процентная ставка (годовая) (“annualInterestRate”)**
 - **Дата выдачи кредита в формате "YYYY-MM-DD" (“loanStartDate”)**
-- **Тип платежей (“paymentType“):** "a" - аннуитетный или "d" - дифференцированный
+- **Тип платежей (“paymentType“):** "ANNUITY" - аннуитетный или "DIFFERENTIATED" - дифференцированный
 
 ### Выходные данные
 Генерируется таблица `XLSX` с графиком платежей, которая содержит:
@@ -23,7 +23,7 @@
 ### Функциональные возможности
 - Адаптивность платежей на выходные и праздничные дни
 - Генерация Excel-файла с возможностью форматирования (изменение цвета заголовков, установка ширины колонок и высоты строк)
-- Статически заданный путь для сохранения файла Excel
+- Задание пути для выходного файла xlsx и входного файла json
 
 ### Как запустить
 
@@ -38,16 +38,22 @@ git clone https://github.com/bleedinEyes/loan-payments-schedule-calculator
 gradle build
 ```
 
-3. **Запустите приложение:**
-Выполните команду:
+3. **Создайте fat JAR:**
+Проект использует `Gradle` для управления зависимостями. Убедитесь, что у вас установлен Gradle, и выполните команду:
 ```bash
-gradle run
+gradle shadowJar
 ```
 
-4. **Результаты:**
-Excel-файл с графиком платежей будет сохранен по статически заданному пути:
+4. **Запустите приложение:**
+Выполните команду:
 ```bash
-C:\\NSPK_Entry_Tasks\\LoanPaymentSchedule.xlsx
+java -jar C:\path\to\project\nspk-credit-payments\build\libs\your-fat-jar-1.0.jar C:\path\to\json\loanDetails.json C:\path\to\output\file\LoanPaymentSchedule.xlsx
+```
+
+5. **Результаты:**
+Excel-файл с графиком платежей будет сохранен по заданному пути:
+```bash
+C:\path\to\output\file\LoanPaymentSchedule.xlsx
 ```
 
 ### Зависимости
@@ -56,5 +62,4 @@ C:\\NSPK_Entry_Tasks\\LoanPaymentSchedule.xlsx
 - Lombok: для упрощения кода с геттерами и сеттерами
 
 ### TODO:
-- Реализовать валидацию параметров из json файла
 - Покрыть функционал тестами
